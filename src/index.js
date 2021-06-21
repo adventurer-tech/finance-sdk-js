@@ -119,15 +119,15 @@ export default class SDK {
       });
     },
     /**
-     * List Transcations by {accountId}
+     * List Transaction by {accountId}
      *
-     * @param {ListAccountTranscationsRequest} req listAccountTranscations request
-     * @returns {Promise<ListAccountTranscationsResponse>} A paged array of transcation
+     * @param {ListAccountTransactionsRequest} req listAccountTransactions request
+     * @returns {Promise<ListAccountTransactionsResponse>} A paged array of transaction
      */
-    listAccountTranscations: req => {
+    listAccountTransactions: req => {
       const { accountId, query } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for listAccountTranscations");
+      if (!accountId) throw new Error("accountId is required for listAccountTransactions");
 
       return fetch(`${this.base}/accounts/${accountId}/transactions`, {
         method: "GET",
@@ -190,18 +190,36 @@ export default class SDK {
       });
     },
     /**
-     * Find transcation by accountId &amp; transcationId
+     * 为 {accountId} 授信
      *
-     * @param {GetAccountTranscationRequest} req getAccountTranscation request
-     * @returns {Promise<GetAccountTranscationResponse>} Expected response to a valid request
+     * @param {AccountCreditRequest} req accountCredit request
+     * @returns {Promise<AccountCreditResponse>} Expected response to a valid request
      */
-    getAccountTranscation: req => {
-      const { accountId, transcationId } = req || {};
+    accountCredit: req => {
+      const { accountId, body } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for getAccountTranscation");
-      if (!transcationId) throw new Error("transcationId is required for getAccountTranscation");
+      if (!accountId) throw new Error("accountId is required for accountCredit");
+      if (!body) throw new Error("requetBody is required for accountCredit");
 
-      return fetch(`${this.base}/accounts/${accountId}/transactions/${transcationId}`, {
+      return fetch(`${this.base}/accounts/${accountId}/!credit`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * Find transaction by accountId &amp; transactionId
+     *
+     * @param {GetAccountTransactionRequest} req getAccountTransaction request
+     * @returns {Promise<GetAccountTransactionResponse>} Expected response to a valid request
+     */
+    getAccountTransaction: req => {
+      const { accountId, transactionId } = req || {};
+
+      if (!accountId) throw new Error("accountId is required for getAccountTransaction");
+      if (!transactionId) throw new Error("transactionId is required for getAccountTransaction");
+
+      return fetch(`${this.base}/accounts/${accountId}/transactions/${transactionId}`, {
         method: "GET",
         headers: { Authorization: this.auth },
       });
