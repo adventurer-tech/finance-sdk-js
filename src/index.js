@@ -94,7 +94,8 @@ export default class SDK {
     updateAccount: req => {
       const { accountId, body } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for updateAccount");
+      if (!accountId)
+        throw new Error("accountId is required for updateAccount");
       if (!body) throw new Error("requetBody is required for updateAccount");
 
       return fetch(`${this.base}/accounts/${accountId}`, {
@@ -111,7 +112,8 @@ export default class SDK {
     deleteAccount: req => {
       const { accountId } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for deleteAccount");
+      if (!accountId)
+        throw new Error("accountId is required for deleteAccount");
 
       return fetch(`${this.base}/accounts/${accountId}`, {
         method: "DELETE",
@@ -127,7 +129,8 @@ export default class SDK {
     listAccountTransactions: req => {
       const { accountId, query } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for listAccountTransactions");
+      if (!accountId)
+        throw new Error("accountId is required for listAccountTransactions");
 
       return fetch(`${this.base}/accounts/${accountId}/transactions`, {
         method: "GET",
@@ -144,7 +147,8 @@ export default class SDK {
     accountRecharge: req => {
       const { accountId, body } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for accountRecharge");
+      if (!accountId)
+        throw new Error("accountId is required for accountRecharge");
       if (!body) throw new Error("requetBody is required for accountRecharge");
 
       return fetch(`${this.base}/accounts/${accountId}/!recharge`, {
@@ -162,7 +166,8 @@ export default class SDK {
     accountWithdraw: req => {
       const { accountId, body } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for accountWithdraw");
+      if (!accountId)
+        throw new Error("accountId is required for accountWithdraw");
       if (!body) throw new Error("requetBody is required for accountWithdraw");
 
       return fetch(`${this.base}/accounts/${accountId}/!withdraw`, {
@@ -180,7 +185,8 @@ export default class SDK {
     accountTransfer: req => {
       const { accountId, body } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for accountTransfer");
+      if (!accountId)
+        throw new Error("accountId is required for accountTransfer");
       if (!body) throw new Error("requetBody is required for accountTransfer");
 
       return fetch(`${this.base}/accounts/${accountId}/!transfer`, {
@@ -198,7 +204,8 @@ export default class SDK {
     accountCredit: req => {
       const { accountId, body } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for accountCredit");
+      if (!accountId)
+        throw new Error("accountId is required for accountCredit");
       if (!body) throw new Error("requetBody is required for accountCredit");
 
       return fetch(`${this.base}/accounts/${accountId}/!credit`, {
@@ -216,13 +223,18 @@ export default class SDK {
     getAccountTransaction: req => {
       const { accountId, transactionId } = req || {};
 
-      if (!accountId) throw new Error("accountId is required for getAccountTransaction");
-      if (!transactionId) throw new Error("transactionId is required for getAccountTransaction");
+      if (!accountId)
+        throw new Error("accountId is required for getAccountTransaction");
+      if (!transactionId)
+        throw new Error("transactionId is required for getAccountTransaction");
 
-      return fetch(`${this.base}/accounts/${accountId}/transactions/${transactionId}`, {
-        method: "GET",
-        headers: { Authorization: this.auth },
-      });
+      return fetch(
+        `${this.base}/accounts/${accountId}/transactions/${transactionId}`,
+        {
+          method: "GET",
+          headers: { Authorization: this.auth },
+        }
+      );
     },
   };
 }
