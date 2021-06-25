@@ -237,4 +237,24 @@ export default class SDK {
       );
     },
   };
+  /**
+   * transaction's methods
+   */
+  transaction = {
+    /**
+     * List Transactions
+     *
+     * @param {ListTransactionsRequest} req listTransactions request
+     * @returns {Promise<ListTransactionsResponse>} A paged array of transaction
+     */
+    listTransactions: req => {
+      const { query } = req || {};
+
+      return fetch(`${this.base}/transactions`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+  };
 }

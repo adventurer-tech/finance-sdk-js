@@ -6,6 +6,7 @@ declare class SDK {
   auth: string;
 
   account: AccountAPI;
+  transaction: TransactionAPI;
 }
 
 export interface Options {
@@ -61,6 +62,12 @@ export interface AccountAPI {
    */
   getAccountTransaction(req: GetAccountTransactionRequest): Promise<GetAccountTransactionResponse>;
 }
+export interface TransactionAPI {
+  /**
+   * List Transactions
+   */
+  listTransactions(req: ListTransactionsRequest): Promise<ListTransactionsResponse>;
+}
 
 export interface ListAccountsRequest {
   query?: {
@@ -69,6 +76,7 @@ export interface ListAccountsRequest {
     _sort?: string;
     _select?: string[];
     type?: string;
+    id?: string[];
     tags?: string[];
     owner?: string;
     project?: string;
@@ -124,6 +132,13 @@ export interface ListAccountsResponse {
      * 最近更新者
      */
     updateBy?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -188,6 +203,13 @@ export interface CreateAccountRequest {
      * 最近更新者
      */
     updateBy?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     /**
      * account's owner
@@ -245,6 +267,13 @@ export interface CreateAccountResponse {
      * 最近更新者
      */
     updateBy?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -309,6 +338,13 @@ export interface GetAccountResponse {
      * 最近更新者
      */
     updateBy?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -371,6 +407,13 @@ export interface UpdateAccountRequest {
      * 最近更新者
      */
     updateBy?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   };
 }
 export interface UpdateAccountResponse {
@@ -423,6 +466,13 @@ export interface UpdateAccountResponse {
      * 最近更新者
      */
     updateBy?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -444,7 +494,9 @@ export interface ListAccountTransactionsRequest {
     _offset?: number;
     _sort?: string;
     _select?: string[];
-    type?: string;
+    type?: string[];
+    id?: string[];
+    refAccount?: string[];
     createAt_gte?: Date;
     createAt_lte?: Date;
     updateAt_gte?: Date;
@@ -456,11 +508,11 @@ export interface ListAccountTransactionsResponse {
     /**
      * 入账账户
      */
-    entryAccount?: string;
+    refAccount?: string;
     /**
      * 出账账户
      */
-    outAccount?: string;
+    account?: string;
     /**
      * 金额
      */
@@ -473,6 +525,13 @@ export interface ListAccountTransactionsResponse {
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -498,6 +557,13 @@ export interface AccountRechargeRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   };
 }
 export interface AccountRechargeResponse {
@@ -505,11 +571,11 @@ export interface AccountRechargeResponse {
     /**
      * 入账账户
      */
-    entryAccount?: string;
+    refAccount?: string;
     /**
      * 出账账户
      */
-    outAccount?: string;
+    account?: string;
     /**
      * 金额
      */
@@ -522,6 +588,13 @@ export interface AccountRechargeResponse {
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -544,6 +617,13 @@ export interface AccountWithdrawRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   };
 }
 export interface AccountWithdrawResponse {
@@ -551,11 +631,11 @@ export interface AccountWithdrawResponse {
     /**
      * 入账账户
      */
-    entryAccount?: string;
+    refAccount?: string;
     /**
      * 出账账户
      */
-    outAccount?: string;
+    account?: string;
     /**
      * 金额
      */
@@ -568,6 +648,13 @@ export interface AccountWithdrawResponse {
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -590,11 +677,18 @@ export interface AccountTransferRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     /**
      * 入账账户ID
      */
-    entryAccount: string;
+    refAccount: string;
   };
 }
 export interface AccountTransferResponse {
@@ -602,11 +696,11 @@ export interface AccountTransferResponse {
     /**
      * 入账账户
      */
-    entryAccount?: string;
+    refAccount?: string;
     /**
      * 出账账户
      */
-    outAccount?: string;
+    account?: string;
     /**
      * 金额
      */
@@ -619,6 +713,13 @@ export interface AccountTransferResponse {
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -641,6 +742,13 @@ export interface AccountCreditRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   };
 }
 export interface AccountCreditResponse {
@@ -648,11 +756,11 @@ export interface AccountCreditResponse {
     /**
      * 入账账户
      */
-    entryAccount?: string;
+    refAccount?: string;
     /**
      * 出账账户
      */
-    outAccount?: string;
+    account?: string;
     /**
      * 金额
      */
@@ -665,6 +773,13 @@ export interface AccountCreditResponse {
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -685,11 +800,11 @@ export interface GetAccountTransactionResponse {
     /**
      * 入账账户
      */
-    entryAccount?: string;
+    refAccount?: string;
     /**
      * 出账账户
      */
-    outAccount?: string;
+    account?: string;
     /**
      * 金额
      */
@@ -702,6 +817,13 @@ export interface GetAccountTransactionResponse {
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
   } & {
     id: string;
     updateAt?: Date;
@@ -713,6 +835,73 @@ export interface GetAccountTransactionResponse {
     createBy: string;
   };
 }
+export interface ListTransactionsRequest {
+  query?: {
+    _limit?: number;
+    _offset?: number;
+    _sort?: string;
+    _select?: string[];
+    type?: string[];
+    id?: string[];
+    account?: string;
+    refAccount?: string[];
+    createAt_gte?: Date;
+    createAt_lte?: Date;
+    updateAt_gte?: Date;
+    updateAt_lte?: Date;
+  };
+}
+export interface ListTransactionsResponse {
+  body: ({
+    /**
+     * 入账账户
+     */
+    refAccount?: string;
+    /**
+     * 出账账户
+     */
+    account?: string;
+    /**
+     * 金额
+     */
+    amount?: number;
+    /**
+     * 备注
+     */
+    remark?: string;
+    /**
+     * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
+     */
+    type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+    /**
+     * 额外数据
+     */
+    extra?: {
+      key?: string;
+      value?: string;
+    }[];
+  } & {
+    id: string;
+    updateAt?: Date;
+    createAt?: Date;
+  } & {
+    /**
+     * 创建人
+     */
+    createBy: string;
+  })[];
+  headers: {
+    "x-total-count": number;
+  };
+}
+/**
+ * 额外数据
+ */
+export type Extra = {
+  key?: string;
+  value?: string;
+}[];
+
 export interface AccountDoc {
   /**
    * 用户或组织
@@ -762,6 +951,13 @@ export interface AccountDoc {
    * 最近更新者
    */
   updateBy?: string;
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 }
 
 export type AccountCreateDoc = {
@@ -813,6 +1009,13 @@ export type AccountCreateDoc = {
    * 最近更新者
    */
   updateBy?: string;
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 } & {
   /**
    * account's owner
@@ -869,6 +1072,13 @@ export type Account = {
    * 最近更新者
    */
   updateBy?: string;
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 } & {
   id: string;
   updateAt?: Date;
@@ -884,11 +1094,11 @@ export interface TransactionDoc {
   /**
    * 入账账户
    */
-  entryAccount?: string;
+  refAccount?: string;
   /**
    * 出账账户
    */
-  outAccount?: string;
+  account?: string;
   /**
    * 金额
    */
@@ -901,6 +1111,13 @@ export interface TransactionDoc {
    * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
    */
   type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 }
 
 export interface TransactionCreateDoc {
@@ -912,6 +1129,13 @@ export interface TransactionCreateDoc {
    * 备注
    */
   remark?: string;
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 }
 
 export type TransactionTransferCreateDoc = {
@@ -923,22 +1147,29 @@ export type TransactionTransferCreateDoc = {
    * 备注
    */
   remark?: string;
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 } & {
   /**
    * 入账账户ID
    */
-  entryAccount: string;
+  refAccount: string;
 };
 
 export type Transaction = {
   /**
    * 入账账户
    */
-  entryAccount?: string;
+  refAccount?: string;
   /**
    * 出账账户
    */
-  outAccount?: string;
+  account?: string;
   /**
    * 金额
    */
@@ -951,6 +1182,13 @@ export type Transaction = {
    * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
    */
   type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
+  /**
+   * 额外数据
+   */
+  extra?: {
+    key?: string;
+    value?: string;
+  }[];
 } & {
   id: string;
   updateAt?: Date;
