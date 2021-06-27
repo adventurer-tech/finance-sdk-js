@@ -257,4 +257,48 @@ export default class SDK {
       });
     },
   };
+  /**
+   * statistics's methods
+   */
+  statistics = {
+    /**
+     * 统计账户
+     *
+     * @param {StatisticAccountsRequest} req statisticAccounts request
+     * @returns {Promise<StatisticAccountsResponse>} Expected response to a valid request
+     */
+    statisticAccounts: req => {
+      const { query } = req || {};
+
+      return fetch(`${this.base}/statistics/accounts`, {
+        method: "GET",
+        query,
+        headers: { Authorization: this.auth },
+      });
+    },
+    /**
+     * 统计账户
+     *
+     * @param {StatisticTransactionByPeriodRequest} req statisticTransactionByPeriod request
+     * @returns {Promise<StatisticTransactionByPeriodResponse>} Expected response to a valid request
+     */
+    statisticTransactionByPeriod: req => {
+      const { accountId, query } = req || {};
+
+      if (!accountId)
+        throw new Error(
+          "accountId is required for statisticTransactionByPeriod"
+        );
+      if (!query) throw new Error("query is required for statistics");
+
+      return fetch(
+        `${this.base}/statistics/accounts/${accountId}/transactions/period`,
+        {
+          method: "GET",
+          query,
+          headers: { Authorization: this.auth },
+        }
+      );
+    },
+  };
 }

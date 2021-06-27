@@ -7,6 +7,7 @@ declare class SDK {
 
   account: AccountAPI;
   transaction: TransactionAPI;
+  statistics: StatisticsAPI;
 }
 
 export interface Options {
@@ -67,6 +68,18 @@ export interface TransactionAPI {
    * List Transactions
    */
   listTransactions(req: ListTransactionsRequest): Promise<ListTransactionsResponse>;
+}
+export interface StatisticsAPI {
+  /**
+   * 统计账户
+   */
+  statisticAccounts(req: StatisticAccountsRequest): Promise<StatisticAccountsResponse>;
+  /**
+   * 统计账户
+   */
+  statisticTransactionByPeriod(
+    req: StatisticTransactionByPeriodRequest
+  ): Promise<StatisticTransactionByPeriodResponse>;
 }
 
 export interface ListAccountsRequest {
@@ -894,6 +907,66 @@ export interface ListTransactionsResponse {
     "x-total-count": number;
   };
 }
+export interface StatisticAccountsRequest {
+  query?: {
+    type?: string;
+  };
+}
+export interface StatisticAccountsResponse {
+  /**
+   * 账户统计
+   */
+  body: {
+    /**
+     * 余额总数
+     */
+    balance?: number;
+    /**
+     * 信用额度总数
+     */
+    credits?: number;
+    /**
+     * 总充值
+     */
+    totalRecharge?: number;
+    /**
+     * 总提现
+     */
+    totalWithdraw?: number;
+    /**
+     * 总转入
+     */
+    totalTransferIn?: number;
+    /**
+     * 总转出
+     */
+    totalTransferOut?: number;
+  };
+}
+export interface StatisticTransactionByPeriodRequest {
+  accountId: string;
+  query?: {
+    period: "DAY" | "WEEK" | "MONTH" | "YEAR";
+    type?: string;
+    createAt_gte?: Date;
+    createAt_lte?: Date;
+  };
+}
+export interface StatisticTransactionByPeriodResponse {
+  /**
+   * 交易记录时段统计
+   */
+  body: {
+    /**
+     * 时段
+     */
+    period?: string;
+    /**
+     * 金额
+     */
+    amount?: number;
+  }[];
+}
 /**
  * 额外数据
  */
@@ -1199,6 +1272,50 @@ export type Transaction = {
    */
   createBy: string;
 };
+
+/**
+ * 账户统计
+ */
+export interface AccountsStat {
+  /**
+   * 余额总数
+   */
+  balance?: number;
+  /**
+   * 信用额度总数
+   */
+  credits?: number;
+  /**
+   * 总充值
+   */
+  totalRecharge?: number;
+  /**
+   * 总提现
+   */
+  totalWithdraw?: number;
+  /**
+   * 总转入
+   */
+  totalTransferIn?: number;
+  /**
+   * 总转出
+   */
+  totalTransferOut?: number;
+}
+
+/**
+ * 交易记录时段统计
+ */
+export type TransactionsPeriodStat = {
+  /**
+   * 时段
+   */
+  period?: string;
+  /**
+   * 金额
+   */
+  amount?: number;
+}[];
 
 export interface MongoDefault {
   id: string;
