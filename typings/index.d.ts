@@ -510,6 +510,8 @@ export interface ListAccountTransactionsRequest {
     type?: string[];
     id?: string[];
     refAccount?: string[];
+    owner?: string[];
+    refOwner?: string[];
     createAt_gte?: Date;
     createAt_lte?: Date;
     updateAt_gte?: Date;
@@ -526,6 +528,14 @@ export interface ListAccountTransactionsResponse {
      * 出账账户
      */
     account?: string;
+    /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
     /**
      * 金额
      */
@@ -590,6 +600,14 @@ export interface AccountRechargeResponse {
      */
     account?: string;
     /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
+    /**
      * 金额
      */
     amount?: number;
@@ -649,6 +667,14 @@ export interface AccountWithdrawResponse {
      * 出账账户
      */
     account?: string;
+    /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
     /**
      * 金额
      */
@@ -715,6 +741,14 @@ export interface AccountTransferResponse {
      */
     account?: string;
     /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
+    /**
      * 金额
      */
     amount?: number;
@@ -775,6 +809,14 @@ export interface AccountCreditResponse {
      */
     account?: string;
     /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
+    /**
      * 金额
      */
     amount?: number;
@@ -818,6 +860,14 @@ export interface GetAccountTransactionResponse {
      * 出账账户
      */
     account?: string;
+    /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
     /**
      * 金额
      */
@@ -874,6 +924,14 @@ export interface ListTransactionsResponse {
      * 出账账户
      */
     account?: string;
+    /**
+     * 所有者
+     */
+    owner?: string;
+    /**
+     * 关联账户所有者
+     */
+    refOwner?: string;
     /**
      * 金额
      */
@@ -1173,6 +1231,14 @@ export interface TransactionDoc {
    */
   account?: string;
   /**
+   * 所有者
+   */
+  owner?: string;
+  /**
+   * 关联账户所有者
+   */
+  refOwner?: string;
+  /**
    * 金额
    */
   amount?: number;
@@ -1243,6 +1309,14 @@ export type Transaction = {
    * 出账账户
    */
   account?: string;
+  /**
+   * 所有者
+   */
+  owner?: string;
+  /**
+   * 关联账户所有者
+   */
+  refOwner?: string;
   /**
    * 金额
    */
