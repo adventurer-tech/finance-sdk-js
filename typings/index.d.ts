@@ -545,6 +545,10 @@ export interface ListAccountTransactionsResponse {
      */
     remark?: string;
     /**
+     * 关联的外部资源
+     */
+    oid?: string;
+    /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
@@ -581,6 +585,10 @@ export interface AccountRechargeRequest {
      */
     remark?: string;
     /**
+     * 外部唯一标识
+     */
+    oid?: string;
+    /**
      * 额外数据
      */
     extra?: {
@@ -616,6 +624,10 @@ export interface AccountRechargeResponse {
      */
     remark?: string;
     /**
+     * 关联的外部资源
+     */
+    oid?: string;
+    /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
@@ -648,6 +660,10 @@ export interface AccountWithdrawRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 外部唯一标识
+     */
+    oid?: string;
     /**
      * 额外数据
      */
@@ -684,6 +700,10 @@ export interface AccountWithdrawResponse {
      */
     remark?: string;
     /**
+     * 关联的外部资源
+     */
+    oid?: string;
+    /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
@@ -716,6 +736,10 @@ export interface AccountTransferRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 外部唯一标识
+     */
+    oid?: string;
     /**
      * 额外数据
      */
@@ -757,6 +781,10 @@ export interface AccountTransferResponse {
      */
     remark?: string;
     /**
+     * 关联的外部资源
+     */
+    oid?: string;
+    /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
@@ -789,6 +817,10 @@ export interface AccountCreditRequest {
      * 备注
      */
     remark?: string;
+    /**
+     * 外部唯一标识
+     */
+    oid?: string;
     /**
      * 额外数据
      */
@@ -824,6 +856,10 @@ export interface AccountCreditResponse {
      * 备注
      */
     remark?: string;
+    /**
+     * 关联的外部资源
+     */
+    oid?: string;
     /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
@@ -877,6 +913,10 @@ export interface GetAccountTransactionResponse {
      */
     remark?: string;
     /**
+     * 关联的外部资源
+     */
+    oid?: string;
+    /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
     type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
@@ -905,9 +945,12 @@ export interface ListTransactionsRequest {
     _sort?: string;
     _select?: string[];
     type?: string[];
+    oid?: string;
     id?: string[];
     account?: string;
     refAccount?: string[];
+    owner?: string;
+    refOwner?: string[];
     createAt_gte?: Date;
     createAt_lte?: Date;
     updateAt_gte?: Date;
@@ -940,6 +983,10 @@ export interface ListTransactionsResponse {
      * 备注
      */
     remark?: string;
+    /**
+     * 关联的外部资源
+     */
+    oid?: string;
     /**
      * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
      */
@@ -1247,6 +1294,10 @@ export interface TransactionDoc {
    */
   remark?: string;
   /**
+   * 关联的外部资源
+   */
+  oid?: string;
+  /**
    * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
    */
   type?: "RECHARGE" | "WITHDRAW" | "TRANSFER" | "CREDIT";
@@ -1269,6 +1320,10 @@ export interface TransactionCreateDoc {
    */
   remark?: string;
   /**
+   * 外部唯一标识
+   */
+  oid?: string;
+  /**
    * 额外数据
    */
   extra?: {
@@ -1286,6 +1341,10 @@ export type TransactionTransferCreateDoc = {
    * 备注
    */
   remark?: string;
+  /**
+   * 外部唯一标识
+   */
+  oid?: string;
   /**
    * 额外数据
    */
@@ -1325,6 +1384,10 @@ export type Transaction = {
    * 备注
    */
   remark?: string;
+  /**
+   * 关联的外部资源
+   */
+  oid?: string;
   /**
    * 交易类型， RECHARGE: 充值(没有源账户), WITHDRAW: 提现(没有目的账户), TRANSFER: 转账, CREDIT: 授信(没有目的账户)
    */
